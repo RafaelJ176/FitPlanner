@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigraph"
+    app:startDestination="@id/loginpage">
+
+    <fragment
+        android:id="@+id/loginpage"
+        android:name="il.rjana.fitplanner.fragments.Loginpage"
+        android:label="fragment_loginpage"
+        tools:layout="@layout/fragment_loginpage" >
+        <action
+            android:id="@+id/action_loginpage_to_frag2"
+            app:destination="@id/frag2" />
+        <action
+            android:id="@+id/action_loginpage_to_reg_fragment"
+            app:destination="@id/reg_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/frag2"
+        android:name="il.rjana.fitplanner.fragments.frag2"
+        android:label="fragment_frag2"
+        tools:layout="@layout/fragment_frag2" >
+        <action
+            android:id="@+id/action_frag2_to_frag3"
+            app:destination="@id/frag3" />
+    </fragment>
+    <fragment
+        android:id="@+id/frag3"
+        android:name="il.rjana.fitplanner.fragments.frag3"
+        android:label="fragment_frag3"
+        tools:layout="@layout/fragment_frag3" />
+    <fragment
+        android:id="@+id/reg_fragment"
+        android:name="il.rjana.fitplanner.fragments.reg_fragment"
+        android:label="reg_fragment" />
+</navigation>

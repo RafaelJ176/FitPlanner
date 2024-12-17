@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "356826965358",
+    "project_id": "fitplanner-6d19b",
+    "storage_bucket": "fitplanner-6d19b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:356826965358:android:d19f07fe20cd510f89cd7f",
+        "android_client_info": {
+          "package_name": "il.rjana.fitplanner"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmKvwHWEIGqOc7JIzlt4C-pwTbXBqchvs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
