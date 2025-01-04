@@ -33,6 +33,7 @@ class Loginpage : Fragment() {
         val emailt = view.findViewById<EditText>(R.id.emailt)
         val passwordt = view.findViewById<EditText>(R.id.passt)
         val loginButton = view.findViewById<Button>(R.id.logint)
+        val registerButton = view.findViewById<Button>(R.id.register) // Registration button
 
         loginButton.setOnClickListener {
             val email = emailt.text.toString()
@@ -61,6 +62,51 @@ class Loginpage : Fragment() {
                         Toast.makeText(
                             requireContext(),
                             "Authentication failed: ${task.exception?.message}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+        }
+
+        registerButton.setOnClickListener {
+            val email = emailt.text.toString()
+            val password = passwordt.text.toString()
+
+            if (email.isBlank() || password.isBlank()) {
+                Toast.makeText(
+                    requireContext(),
+                    "Email and Password cannot be empty",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
+            }
+
+            if (password.length < 6) {
+                Toast.makeText(
+                    requireContext(),
+                    "Password must be at least 6 characters long",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
+            }
+
+            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                Toast.makeText(requireContext(), "Enter a valid email address", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(requireActivity()) { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(
+                            requireContext(),
+                            "Registration successful! Please log in.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        Toast.makeText(
+                            requireContext(),
+                            "Registration failed: ${task.exception?.message}",
                             Toast.LENGTH_SHORT
                         ).show()
                     }

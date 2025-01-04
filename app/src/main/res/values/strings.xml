@@ -6,5 +6,5 @@
     <string name="register">Register</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="don_t_have_account_an_yet">Don\'t have Account an Yet?</string>
+    <string name="don_t_have_account_yet">Don\'t have an Account Yet?</string>
 </resources>

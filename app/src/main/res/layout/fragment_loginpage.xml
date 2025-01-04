@@ -71,7 +71,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
-            android:text="@string/don_t_have_account_an_yet"
+            android:text="@string/don_t_have_account_yet"
             />
         <Button
             android:id="@+id/register"
