@@ -33,8 +33,10 @@ class Loginpage : Fragment() {
         val emailt = view.findViewById<EditText>(R.id.emailt)
         val passwordt = view.findViewById<EditText>(R.id.passt)
         val loginButton = view.findViewById<Button>(R.id.logint)
-        val registerButton = view.findViewById<Button>(R.id.register) // Registration button
+        val registerButton = view.findViewById<Button>(R.id.register)
+        val resetPasswordButton = view.findViewById<Button>(R.id.resetPassword)
 
+        // Login functionality
         loginButton.setOnClickListener {
             val email = emailt.text.toString()
             val password = passwordt.text.toString()
@@ -56,8 +58,16 @@ class Loginpage : Fragment() {
             auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(requireActivity()) { task ->
                     if (task.isSuccessful) {
-                        Toast.makeText(requireContext(), "Login successful!", Toast.LENGTH_SHORT).show()
-                        findNavController().navigate(R.id.action_loginpage_to_frag2)
+                        if (auth.currentUser?.isEmailVerified == true) {
+                            Toast.makeText(requireContext(), "Login successful!", Toast.LENGTH_SHORT).show()
+                            findNavController().navigate(R.id.action_loginpage_to_frag2)
+                        } else {
+                            Toast.makeText(
+                                requireContext(),
+                                "Please verify your email before logging in.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     } else {
                         Toast.makeText(
                             requireContext(),
@@ -68,6 +78,7 @@ class Loginpage : Fragment() {
                 }
         }
 
+        // Registration functionality
         registerButton.setOnClickListener {
             val email = emailt.text.toString()
             val password = passwordt.text.toString()
@@ -98,15 +109,59 @@ class Loginpage : Fragment() {
             auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(requireActivity()) { task ->
                     if (task.isSuccessful) {
+                        val user = auth.currentUser
+                        user?.sendEmailVerification()
+                            ?.addOnCompleteListener { verificationTask ->
+                                if (verificationTask.isSuccessful) {
+                                    Toast.makeText(
+                                        requireContext(),
+                                        "Registration successful! Verification email sent. Please verify your email before logging in.",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                } else {
+                                    Toast.makeText(
+                                        requireContext(),
+                                        "Failed to send verification email: ${verificationTask.exception?.message}",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            }
+                    } else {
                         Toast.makeText(
                             requireContext(),
-                            "Registration successful! Please log in.",
+                            "Registration failed: ${task.exception?.message}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+        }
+
+        // Reset password functionality
+        resetPasswordButton.setOnClickListener {
+            val email = emailt.text.toString()
+
+            if (email.isBlank()) {
+                Toast.makeText(requireContext(), "Please enter your email", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                Toast.makeText(requireContext(), "Enter a valid email address", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            auth.sendPasswordResetEmail(email)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(
+                            requireContext(),
+                            "Password reset email sent. Please check your inbox.",
                             Toast.LENGTH_SHORT
                         ).show()
                     } else {
                         Toast.makeText(
                             requireContext(),
-                            "Registration failed: ${task.exception?.message}",
+                            "Error: ${task.exception?.message}",
                             Toast.LENGTH_SHORT
                         ).show()
                     }

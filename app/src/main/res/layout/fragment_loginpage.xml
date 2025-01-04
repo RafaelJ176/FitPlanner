@@ -63,6 +63,20 @@
             android:text="@string/login"
             android:backgroundTint="@color/white"
             />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/forgot_your_password"
+            android:textColor="@color/white"
+            />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/resetPassword"
+            android:text="@string/reset_password"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/black"
+            />
         <Space
             android:layout_width="20dp"
             android:layout_height="20dp"
